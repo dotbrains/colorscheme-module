@@ -1,4 +1,7 @@
-# 'colorscheme' Module 🎨
+# Colorschemes Module 🎨
+
+[![Tests](https://github.com/dotbrains/colorschemes/actions/workflows/tests.yml/badge.svg)](https://github.com/dotbrains/colorschemes/actions/workflows/tests.yml)
+[![Lint](https://github.com/dotbrains/colorschemes/actions/workflows/lint.yml/badge.svg)](https://github.com/dotbrains/colorschemes/actions/workflows/lint.yml)
 
 Multi-OS colorscheme configuration with clear separation between operating systems while maintaining DRY principles.
 
