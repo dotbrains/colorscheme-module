@@ -1,0 +1,24 @@
+gui:
+  theme:
+    activeBorderColor:
+      - '#88C0D0'  # nord8 (frost cyan)
+      - bold
+    inactiveBorderColor:
+      - '#4C566A'  # nord3 (polar night)
+    optionsTextColor:
+      - '#81A1C1'  # nord9 (frost blue)
+    selectedLineBgColor:
+      - '#3B4252'  # nord1 (polar night)
+    selectedRangeBgColor:
+      - '#434C5E'  # nord2 (polar night)
+    cherryPickedCommitBgColor:
+      - '#4C566A'  # nord3 (polar night)
+    cherryPickedCommitFgColor:
+      - '#8FBCBB'  # nord7 (frost cyan-green)
+    unstagedChangesColor:
+      - '#BF616A'  # nord11 (aurora red)
+    defaultFgColor:
+      - '#E5E9F0'  # nord5 (snow storm)
+    searchingActiveBorderColor:
+      - '#EBCB8B'  # nord13 (aurora yellow)
+      - bold
