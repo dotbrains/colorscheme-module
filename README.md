@@ -1,10 +1,10 @@
-# Colorschemes Module 🎨
+# 'colorscheme' Module 🎨
 
 Multi-OS colorscheme configuration with clear separation between operating systems while maintaining DRY principles.
 
 ## Structure
 
-```
+```text
 colorschemes/
 ├── _shared/              # Shared resources (DRY)
 │   ├── lib.sh           # Common functions for all OSes
@@ -37,16 +37,19 @@ colorschemes/
 ## Supported Applications
 
 ### Universal (All OSes)
+
 - Fish shell
 - Bat (syntax highlighter)
 - Starship (prompt)
 - Lazygit (git TUI) - All themes supported
 
 ### macOS
+
 - Terminal.app
 - Desktop wallpaper
 
 ### Debian/Ubuntu
+
 - GNOME Terminal
 - Desktop wallpaper
 
@@ -57,16 +60,19 @@ colorschemes/
 After running the colorscheme setup, lazygit themes are installed but need to be activated. Add this to your shell configuration:
 
 **Gruvbox:**
+
 ```bash
 alias lazygit='lazygit --use-config-file="$HOME/.config/lazygit/config.yml,$HOME/.config/lazygit/gruvbox.yml"'
 ```
 
 **Nord:**
+
 ```bash
 alias lazygit='lazygit --use-config-file="$HOME/.config/lazygit/config.yml,$HOME/.config/lazygit/nord.yml"'
 ```
 
 **Catppuccin:**
+
 ```bash
 alias lazygit='lazygit --use-config-file="$HOME/.config/lazygit/config.yml,$HOME/.config/lazygit/catppuccin/macchiato-blue.yml"'
 ```
