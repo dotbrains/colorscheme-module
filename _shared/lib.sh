@@ -25,6 +25,9 @@ set_wallpaper() {
     if is_macos && cmd_exists "wallpaper"; then
         action "Setting wallpaper: ${wallpaper_name}"
         wallpaper set "$wallpaper_path"
+    elif is_arch && cmd_exists "feh"; then
+        action "Setting wallpaper: ${wallpaper_name}"
+        feh --bg-scale "$wallpaper_path"
     elif is_debian && cmd_exists "gsettings"; then
         action "Setting wallpaper: ${wallpaper_name}"
         gsettings set org.gnome.desktop.background picture-uri "file://${wallpaper_path}"

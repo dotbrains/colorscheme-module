@@ -6,6 +6,7 @@
 #
 # Multi-OS colorscheme setup with support for:
 # - macOS: Terminal.app, wallpaper
+# - Arch Linux: wallpaper, terminal themes
 # - Debian/Ubuntu: GNOME Terminal, wallpaper
 # - Universal: fish, bat, starship, lazygit
 #
@@ -48,6 +49,9 @@ main() {
     if is_macos; then
         action "Applying ${COLORSCHEME} colorscheme (macOS)"
         bash "macos/${COLORSCHEME}.sh"
+    elif is_arch; then
+        action "Applying ${COLORSCHEME} colorscheme (Arch Linux)"
+        bash "arch/${COLORSCHEME}.sh"
     elif is_debian; then
         action "Applying ${COLORSCHEME} colorscheme (Debian)"
         # Debian-specific scripts can be added here

@@ -21,6 +21,10 @@ colorschemes/
 │   └── terminal/        # Terminal.app themes
 │       ├── apply_theme.applescript
 │       └── themes/
+├── arch/                # Arch Linux-specific scripts
+│   ├── gruvbox.sh
+│   ├── nord.sh
+│   └── catppuccin.sh
 ├── universal/           # Cross-platform scripts
 │   ├── gruvbox.sh      # fish, bat, starship
 │   ├── nord.sh
@@ -47,6 +51,10 @@ colorschemes/
 
 - Terminal.app
 - Desktop wallpaper
+
+### Arch Linux
+
+- Desktop wallpaper (via feh)
 
 ### Debian/Ubuntu
 
@@ -116,7 +124,7 @@ bash universal/gruvbox.sh
 ### Entry Point Flow
 
 1. `colorschemes.sh` detects your OS
-2. Routes to appropriate OS-specific script (`macos/`, `debian/`, etc.)
+2. Routes to appropriate OS-specific script (`macos/`, `arch/`, `debian/`, etc.)
 3. OS-specific script:
    - Applies OS-specific configurations (wallpaper, Terminal themes)
    - Calls universal script for cross-platform tools
@@ -137,15 +145,18 @@ All shared functionality lives in `_shared/lib.sh`:
 1. Add wallpapers to `_shared/wallpapers/<theme>/`
 2. Add starship config to `_shared/configs/starship/<theme>.toml`
 3. Create `universal/<theme>.sh` for cross-platform setup
-4. Create `macos/<theme>.sh` for macOS-specific setup
-5. Add Terminal.app theme to `macos/terminal/themes/<Theme>.terminal`
+4. Create OS-specific scripts:
+   - `macos/<theme>.sh` for macOS
+   - `arch/<theme>.sh` for Arch Linux
+   - `debian/<theme>.sh` for Debian/Ubuntu
+5. Add Terminal.app theme to `macos/terminal/themes/<Theme>.terminal` (macOS only)
 
 ### Adding New OS Support
 
-1. Create new directory: `debian/`, `arch/`, etc.
-2. Create OS-specific scripts: `debian/gruvbox.sh`
-3. Update `colorschemes.sh` with OS detection logic
-4. Implement OS-specific functions in `_shared/lib.sh`
+1. Create new directory: `debian/`, `fedora/`, etc.
+2. Create OS-specific scripts for each theme: `debian/gruvbox.sh`, `debian/nord.sh`, etc.
+3. Update `colorschemes.sh` with OS detection logic using utilities functions (e.g., `is_debian`, `is_arch`)
+4. Implement OS-specific functions in `_shared/lib.sh` (e.g., wallpaper setting)
 
 ## Benefits
 
