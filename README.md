@@ -1,4 +1,4 @@
-# Colorschemes Module 🎨
+# 'colorscheme' Module 🎨
 
 [![Tests](https://github.com/dotbrains/colorschemes/actions/workflows/tests.yml/badge.svg)](https://github.com/dotbrains/colorschemes/actions/workflows/tests.yml)
 [![Lint](https://github.com/dotbrains/colorschemes/actions/workflows/lint.yml/badge.svg)](https://github.com/dotbrains/colorschemes/actions/workflows/lint.yml)
