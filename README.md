@@ -158,7 +158,7 @@ All shared functionality lives in `_shared/lib.sh`:
 
 1. Create new directory: `debian/`, `fedora/`, etc.
 2. Create OS-specific scripts for each theme: `debian/gruvbox.sh`, `debian/nord.sh`, etc.
-3. Update `colorschemes.sh` with OS detection logic using utilities functions (e.g., `is_debian`, `is_arch`)
+3. Update `colorschemes.sh` with OS detection logic using utilities functions (e.g., `is_debian`, `is_arch_linux`)
 4. Implement OS-specific functions in `_shared/lib.sh` (e.g., wallpaper setting)
 
 ## Benefits

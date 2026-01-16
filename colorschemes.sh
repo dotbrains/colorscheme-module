@@ -49,7 +49,7 @@ main() {
     if is_macos; then
         action "Applying ${COLORSCHEME} colorscheme (macOS)"
         bash "macos/${COLORSCHEME}.sh"
-    elif is_arch; then
+    elif is_arch_linux; then
         action "Applying ${COLORSCHEME} colorscheme (Arch Linux)"
         bash "arch/${COLORSCHEME}.sh"
     elif is_debian; then
