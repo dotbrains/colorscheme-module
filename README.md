@@ -150,7 +150,11 @@ All shared functionality lives in `_shared/lib.sh`:
 ## Benefits
 
 ✅ **Clear OS separation**: Easy to see what works where
+
 ✅ **DRY code**: No duplication between themes
+
 ✅ **Composable**: OS scripts call universal scripts
+
 ✅ **Extensible**: Easy to add new OSes or themes
+
 ✅ **Maintainable**: Shared resources in one place
