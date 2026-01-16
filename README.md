@@ -78,6 +78,7 @@ alias lazygit='lazygit --use-config-file="$HOME/.config/lazygit/config.yml,$HOME
 ```
 
 Or set the environment variable:
+
 ```bash
 export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml,$HOME/.config/lazygit/gruvbox.yml"
 ```
@@ -99,11 +100,13 @@ bash colorschemes.sh
 ### OS-Specific Usage
 
 **macOS only:**
+
 ```bash
 bash macos/gruvbox.sh
 ```
 
 **Universal (cross-platform) only:**
+
 ```bash
 bash universal/gruvbox.sh
 ```
