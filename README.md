@@ -2,6 +2,7 @@
 
 [![Tests](https://github.com/dotbrains/colorschemes/actions/workflows/tests.yml/badge.svg)](https://github.com/dotbrains/colorschemes/actions/workflows/tests.yml)
 [![Lint](https://github.com/dotbrains/colorschemes/actions/workflows/lint.yml/badge.svg)](https://github.com/dotbrains/colorschemes/actions/workflows/lint.yml)
+[![License: PolyForm Shield 1.0.0](https://img.shields.io/badge/License-PolyForm%20Shield%201.0.0-blue.svg)](https://polyformproject.org/licenses/shield/1.0.0/)
 
 Multi-OS colorscheme configuration with clear separation between operating systems while maintaining DRY principles.
 
