@@ -57,16 +57,33 @@ install_bat_theme() {
 
     # Clone or update the theme repository
     if [ -d "$temp_dir" ]; then
-        git -C "$temp_dir" pull
+        if ! git -C "$temp_dir" pull &>/dev/null; then
+            warn "Failed to update bat theme repo: ${theme_repo}"
+            return 0
+        fi
     else
-        git clone "$theme_repo" "$temp_dir"
+        if ! git clone "$theme_repo" "$temp_dir" &>/dev/null; then
+            warn "Failed to clone bat theme repo: ${theme_repo}"
+            return 0
+        fi
     fi
 
     # Copy theme files
-    cp "${temp_dir}"/*.tmTheme "$bat_themes_dir" 2>/dev/null || true
+    if ! compgen -G "${temp_dir}/*.tmTheme" > /dev/null; then
+        warn "No .tmTheme files found in ${temp_dir}"
+        return 0
+    fi
+
+    if ! cp "${temp_dir}"/*.tmTheme "$bat_themes_dir" 2>/dev/null; then
+        warn "Failed to copy bat theme files to ${bat_themes_dir}"
+        return 0
+    fi
 
     # Rebuild cache
-    bat cache --build
+    if ! bat cache --build &>/dev/null; then
+        warn "Failed to rebuild bat cache"
+        return 0
+    fi
 
     success "Bat theme installed: ${theme_name}"
 }

@@ -27,7 +27,7 @@ main() {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     # Bat theme
-    install_bat_theme "https://github.com/peaceant/gruvbox-material-bat" "gruvbox"
+    install_bat_theme "https://github.com/peaceant/gruvbox" "gruvbox"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
