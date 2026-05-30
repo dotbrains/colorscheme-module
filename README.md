@@ -173,3 +173,16 @@ All shared functionality lives in `_shared/lib.sh`:
 ✅ **Extensible**: Easy to add new OSes or themes
 
 ✅ **Maintainable**: Shared resources in one place
+
+## Reproducible dev environment (Flox)
+
+A [Flox](https://flox.dev) manifest at `.flox/env/manifest.toml` pins the toolchain CI uses — `bash`, `shellcheck`, and `nodejs` (for `npx markdownlint-cli2`). Activating it gives contributors the same versions on macOS or Linux:
+
+```bash
+# From the colorschemes/ directory:
+flox activate
+
+# Inside the activated shell:
+./tests/main.sh
+npx markdownlint-cli2 "**/*.md"
+```
