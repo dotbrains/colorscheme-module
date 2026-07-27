@@ -41,6 +41,12 @@ colorschemes/
 - **Gruvbox**: Retro groove color scheme
 - **Nord**: Arctic, north-bluish color palette
 - **Catppuccin**: Soothing pastel theme
+- **Tokyo Night**: Dark blue editor-oriented palette
+- **Rose Pine**: Low-contrast rosy pine palette
+- **Dracula**: High-contrast purple and green palette
+- **Everforest**: Green forest palette
+- **Solarized**: Precision light/dark terminal palette
+- **Kanagawa**: Japanese painting-inspired palette
 
 ## Supported Applications
 

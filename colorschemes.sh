@@ -19,7 +19,7 @@ declare current_dir &&
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-SUPPORTED_COLORSCHEMES="gruvbox nord catppuccin"
+SUPPORTED_COLORSCHEMES="gruvbox nord catppuccin tokyo-night rose-pine dracula everforest solarized kanagawa"
 DEFAULT_COLORSCHEME="gruvbox"
 
 load_profile() {

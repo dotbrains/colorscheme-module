@@ -1,0 +1,14 @@
+format = "$directory$git_branch$git_status$character"
+
+[directory]
+style = "bold #8be9fd"
+
+[git_branch]
+style = "bold #bd93f9"
+
+[git_status]
+style = "#ff5555"
+
+[character]
+success_symbol = "[❯](bold #50fa7b)"
+error_symbol = "[❯](bold #ff5555)"
