@@ -18,6 +18,8 @@ colorschemes/
 │   │   └── catppuccin/
 │   └── configs/         # Shared configurations
 │       └── starship/    # Starship prompt configs
+├── themes/              # Theme manifests used by smu and contract checks
+├── scripts/             # Theme registry tooling
 ├── macos/               # macOS-specific scripts
 │   ├── gruvbox.sh
 │   ├── nord.sh
@@ -167,14 +169,31 @@ All shared functionality lives in `_shared/lib.sh`:
 
 ### Adding New Themes
 
-1. Add wallpapers to `_shared/wallpapers/<theme>/`
-2. Add starship config to `_shared/configs/starship/<theme>.toml`
-3. Create `universal/<theme>.sh` for cross-platform setup
-4. Create OS-specific scripts:
+Theme metadata lives in `themes/<theme>.toml`. The manifest is the registry
+entry that `smu theme list`, `smu theme doctor`, and repository contract checks
+read, so add it first.
+
+1. Add `themes/<theme>.toml`
+2. Add wallpapers to `_shared/wallpapers/<theme>/`
+3. Add starship config to `_shared/configs/starship/<theme>.toml`
+4. Create `universal/<theme>.sh` for cross-platform setup
+5. Create OS-specific scripts:
    - `macos/<theme>.sh` for macOS
    - `arch/<theme>.sh` for Arch Linux
    - `debian/<theme>.sh` for Debian/Ubuntu
-5. Add Terminal.app theme to `macos/terminal/themes/<Theme>.terminal` (macOS only)
+6. Add Terminal.app theme to `macos/terminal/themes/<Theme>.terminal` (macOS only)
+7. Add matching adapter files in the dotfile repositories referenced by the
+   manifest, then run:
+
+```bash
+python3 scripts/theme_contract.py
+python3 scripts/generate-theme-adapters.py
+```
+
+`theme_contract.py` validates that every manifest has the required adapter files
+in an aggregate `set-me-up` checkout. `generate-theme-adapters.py` prints the
+adapter inventory for each manifest so agents can see exactly where a theme
+needs files before editing.
 
 ### Adding New OS Support
 

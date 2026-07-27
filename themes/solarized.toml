@@ -1,0 +1,20 @@
+id = "solarized"
+name = "Solarized"
+
+[bat]
+theme = "Solarized (dark)"
+
+[starship]
+config = "solarized.toml"
+
+[lazygit]
+config = "solarized.yml"
+
+[alacritty]
+theme = "solarized.toml"
+
+[nvim]
+colorscheme = "solarized"
+
+[tmux]
+theme = "solarized.conf"

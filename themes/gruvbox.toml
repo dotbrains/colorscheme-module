@@ -1,0 +1,20 @@
+id = "gruvbox"
+name = "Gruvbox"
+
+[bat]
+theme = "gruvbox-dark"
+
+[starship]
+config = "gruvbox.toml"
+
+[lazygit]
+config = "gruvbox.yml"
+
+[alacritty]
+theme = "gruvbox.toml"
+
+[nvim]
+colorscheme = "gruvbox"
+
+[tmux]
+theme = "gruvbox.conf"

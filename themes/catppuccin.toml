@@ -1,0 +1,21 @@
+id = "catppuccin"
+name = "Catppuccin"
+
+[bat]
+theme = "Catppuccin-macchiato"
+
+[starship]
+config = "catppuccin.toml"
+
+[lazygit]
+source = "repo"
+config = "https://github.com/catppuccin/lazygit"
+
+[alacritty]
+theme = "catppuccin.toml"
+
+[nvim]
+colorscheme = "catppuccin"
+
+[tmux]
+theme = "catppuccin.conf"

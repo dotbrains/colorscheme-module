@@ -1,0 +1,20 @@
+id = "kanagawa"
+name = "Kanagawa"
+
+[bat]
+theme = "Kanagawa"
+
+[starship]
+config = "kanagawa.toml"
+
+[lazygit]
+config = "kanagawa.yml"
+
+[alacritty]
+theme = "kanagawa.toml"
+
+[nvim]
+colorscheme = "kanagawa"
+
+[tmux]
+theme = "kanagawa.conf"

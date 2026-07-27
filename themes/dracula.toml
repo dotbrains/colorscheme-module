@@ -1,0 +1,20 @@
+id = "dracula"
+name = "Dracula"
+
+[bat]
+theme = "Dracula"
+
+[starship]
+config = "dracula.toml"
+
+[lazygit]
+config = "dracula.yml"
+
+[alacritty]
+theme = "dracula.toml"
+
+[nvim]
+colorscheme = "dracula"
+
+[tmux]
+theme = "dracula.conf"

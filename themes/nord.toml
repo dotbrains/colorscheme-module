@@ -1,0 +1,20 @@
+id = "nord"
+name = "Nord"
+
+[bat]
+theme = "Nord"
+
+[starship]
+config = "nord.toml"
+
+[lazygit]
+config = "nord.yml"
+
+[alacritty]
+theme = "nord.toml"
+
+[nvim]
+colorscheme = "nord"
+
+[tmux]
+theme = "nord.conf"

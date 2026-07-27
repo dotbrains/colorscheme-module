@@ -1,0 +1,20 @@
+id = "everforest"
+name = "Everforest"
+
+[bat]
+theme = "Everforest Dark"
+
+[starship]
+config = "everforest.toml"
+
+[lazygit]
+config = "everforest.yml"
+
+[alacritty]
+theme = "everforest.toml"
+
+[nvim]
+colorscheme = "everforest"
+
+[tmux]
+theme = "everforest.conf"

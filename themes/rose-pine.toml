@@ -1,0 +1,20 @@
+id = "rose-pine"
+name = "Rose Pine"
+
+[bat]
+theme = "Rose Pine"
+
+[starship]
+config = "rose-pine.toml"
+
+[lazygit]
+config = "rose-pine.yml"
+
+[alacritty]
+theme = "rose-pine.toml"
+
+[nvim]
+colorscheme = "rose-pine"
+
+[tmux]
+theme = "rose-pine.conf"

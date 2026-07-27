@@ -1,0 +1,20 @@
+id = "tokyo-night"
+name = "Tokyo Night"
+
+[bat]
+theme = "TokyoNight"
+
+[starship]
+config = "tokyo-night.toml"
+
+[lazygit]
+config = "tokyo-night.yml"
+
+[alacritty]
+theme = "tokyo-night.toml"
+
+[nvim]
+colorscheme = "tokyonight"
+
+[tmux]
+theme = "tokyo-night.conf"
