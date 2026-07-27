@@ -39,6 +39,9 @@ main() {
     # Lazygit theme
     install_lazygit_theme "gruvbox" "local" "gruvbox.yml"
 
+    # Alacritty theme selector
+    install_alacritty_theme "gruvbox"
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     success "Gruvbox theme setup complete (universal)"

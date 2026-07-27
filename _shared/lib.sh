@@ -8,7 +8,8 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Get the absolute path to the _shared directory
-readonly SHARED_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SHARED_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly SHARED_DIR
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -50,7 +51,8 @@ install_bat_theme() {
 
     action "Installing bat theme: ${theme_name}"
 
-    local bat_themes_dir="$(bat --config-dir)/themes"
+    local bat_themes_dir
+    bat_themes_dir="$(bat --config-dir)/themes"
     mkdir -p "$bat_themes_dir"
 
     local temp_dir="${HOME}/.config/bat/${theme_name}"
@@ -135,6 +137,29 @@ install_starship_config() {
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+install_alacritty_theme() {
+    local theme="$1"
+    local alacritty_theme_dir="${HOME}/.config/alacritty/theme"
+    local theme_path="${alacritty_theme_dir}/${theme}.toml"
+    local current_path="${alacritty_theme_dir}/current.toml"
+
+    if ! [ -f "$theme_path" ]; then
+        return 0
+    fi
+
+    action "Selecting Alacritty theme: ${theme}"
+
+    if ln -sfn "$theme_path" "$current_path" 2>/dev/null; then
+        success "Alacritty theme selected: ${theme}"
+        return 0
+    fi
+
+    cp "$theme_path" "$current_path"
+    success "Alacritty theme copied: ${theme}"
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 install_lazygit_theme() {
     local theme_name="$1"
     local theme_source="$2"  # 'repo' for git repos, 'local' for our custom themes
@@ -146,7 +171,8 @@ install_lazygit_theme() {
 
     action "Installing lazygit theme: ${theme_name}"
 
-    local lazygit_config_dir="$(lazygit --config-dir 2>/dev/null || echo "$HOME/.config/lazygit")"
+    local lazygit_config_dir
+    lazygit_config_dir="$(lazygit --config-dir 2>/dev/null || echo "$HOME/.config/lazygit")"
     mkdir -p "${lazygit_config_dir}"
 
     if [ "$theme_source" = "repo" ]; then

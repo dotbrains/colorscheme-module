@@ -34,6 +34,9 @@ main() {
     # Lazygit theme
     install_lazygit_theme "nord" "local" "nord.yml"
 
+    # Alacritty theme selector
+    install_alacritty_theme "nord"
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     success "Nord theme setup complete (universal)"

@@ -97,16 +97,30 @@ export LG_CONFIG_FILE="$HOME/.config/lazygit/config.yml,$HOME/.config/lazygit/gr
 
 ### Quick Start
 
-Edit `colorschemes.sh` and set your preferred theme:
+Use `smu` to save and apply your preferred theme:
 
 ```bash
-COLORSCHEME="gruvbox"  # Options: gruvbox, nord, catppuccin
+smu theme set nord --apply
 ```
 
-Then run:
+Or run this module directly:
 
 ```bash
-bash colorschemes.sh
+bash colorschemes.sh nord
+```
+
+Theme resolution order is:
+
+1. Direct script argument, e.g. `bash colorschemes.sh catppuccin`
+2. `SMU_THEME` environment variable
+3. `~/.config/set-me-up/profile.env`
+4. `gruvbox`
+
+The saved set-me-up profile is shared with shell and app config repositories:
+
+```bash
+export SMU_THEME="gruvbox"
+export SMU_PROMPT="starship"
 ```
 
 ### OS-Specific Usage
@@ -127,12 +141,13 @@ bash universal/gruvbox.sh
 
 ### Entry Point Flow
 
-1. `colorschemes.sh` detects your OS
-2. Routes to appropriate OS-specific script (`macos/`, `arch/`, `debian/`, etc.)
-3. OS-specific script:
+1. `colorschemes.sh` resolves the selected theme
+2. `colorschemes.sh` detects your OS
+3. Routes to appropriate OS-specific script (`macos/`, `arch/`, `debian/`, etc.)
+4. OS-specific script:
    - Applies OS-specific configurations (wallpaper, Terminal themes)
    - Calls universal script for cross-platform tools
-4. Universal script configures fish, bat, starship, etc.
+5. Universal script configures fish, bat, starship, lazygit, Alacritty, etc.
 
 ### DRY Principles
 
@@ -176,7 +191,10 @@ All shared functionality lives in `_shared/lib.sh`:
 
 ## Reproducible dev environment (Flox)
 
-A [Flox](https://flox.dev) manifest at `.flox/env/manifest.toml` pins the toolchain CI uses — `bash`, `shellcheck`, and `nodejs` (for `npx markdownlint-cli2`). Activating it gives contributors the same versions on macOS or Linux:
+A [Flox](https://flox.dev) manifest at `.flox/env/manifest.toml` pins the
+toolchain CI uses — `bash`, `shellcheck`, and `nodejs` (for
+`npx markdownlint-cli2`). Activating it gives contributors the same versions on
+macOS or Linux:
 
 ```bash
 # From the colorschemes/ directory:

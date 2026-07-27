@@ -39,6 +39,9 @@ main() {
     # Starship prompt
     install_starship_config "catppuccin"
 
+    # Alacritty theme selector
+    install_alacritty_theme "catppuccin"
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     success "Catppuccin theme setup complete (universal)"

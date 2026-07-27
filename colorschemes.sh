@@ -19,15 +19,54 @@ declare current_dir &&
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Configuration: Select your preferred colorscheme
-# Options: gruvbox, nord, catppuccin
-COLORSCHEME="gruvbox"
+SUPPORTED_COLORSCHEMES="gruvbox nord catppuccin"
+DEFAULT_COLORSCHEME="gruvbox"
+
+load_profile() {
+    local profile="${XDG_CONFIG_HOME:-$HOME/.config}/set-me-up/profile.env"
+    local env_theme="${SMU_THEME:-}"
+
+    if [ -f "$profile" ]; then
+        # shellcheck source=/dev/null
+        source "$profile"
+    fi
+
+    if [ -n "$env_theme" ]; then
+        SMU_THEME="$env_theme"
+    fi
+}
+
+is_supported_colorscheme() {
+    local colorscheme="$1"
+
+    for supported in $SUPPORTED_COLORSCHEMES; do
+        if [ "$supported" = "$colorscheme" ]; then
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+resolve_colorscheme() {
+    local colorscheme="${1:-${SMU_THEME:-$DEFAULT_COLORSCHEME}}"
+
+    if ! is_supported_colorscheme "$colorscheme"; then
+        warn "Unknown colorscheme '${colorscheme}', defaulting to ${DEFAULT_COLORSCHEME}"
+        colorscheme="$DEFAULT_COLORSCHEME"
+    fi
+
+    printf "%s" "$colorscheme"
+}
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
 
     ask_for_sudo
+    load_profile
+
+    COLORSCHEME="$(resolve_colorscheme "${1:-}")"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -69,4 +108,4 @@ main() {
 
 }
 
-main
+main "$@"
