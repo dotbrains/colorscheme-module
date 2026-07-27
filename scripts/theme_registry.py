@@ -6,6 +6,39 @@ import pathlib
 import re
 
 
+HEX_COLOR_RE = re.compile(r"^#[0-9A-Fa-f]{6}$")
+REQUIRED_SECTIONS = (
+    "bat",
+    "starship",
+    "lazygit",
+    "alacritty",
+    "nvim",
+    "tmux",
+    "palette",
+)
+REQUIRED_PALETTE_KEYS = (
+    "background",
+    "foreground",
+    "selection",
+    "black",
+    "red",
+    "green",
+    "yellow",
+    "blue",
+    "magenta",
+    "cyan",
+    "white",
+    "bright_black",
+    "bright_red",
+    "bright_green",
+    "bright_yellow",
+    "bright_blue",
+    "bright_magenta",
+    "bright_cyan",
+    "bright_white",
+)
+
+
 def read_manifest(path):
     data = {}
     current_section = None
@@ -36,6 +69,7 @@ def manifests(themes_dir):
     return [
         read_manifest(path)
         for path in sorted(pathlib.Path(themes_dir).glob("*.toml"))
+        if path.name != "schema.json"
     ]
 
 
@@ -77,6 +111,48 @@ def tmux_theme(theme):
 
 def nvim_colorscheme(theme):
     return theme.get("nvim", {}).get("colorscheme", theme_id(theme))
+
+
+def palette(theme):
+    return theme.get("palette", {})
+
+
+def validate_theme(theme):
+    errors = []
+    theme_name = theme.get("id", "<unknown>")
+
+    for key in ("id", "name"):
+        if not theme.get(key):
+            errors.append(f"{theme_name}: missing {key}")
+
+    if theme.get("id") and not re.match(r"^[a-z0-9][a-z0-9-]*$", theme["id"]):
+        errors.append(f"{theme_name}: id must be kebab-case")
+
+    required_values = {
+        "bat": "theme",
+        "starship": "config",
+        "lazygit": "config",
+        "alacritty": "theme",
+        "nvim": "colorscheme",
+        "tmux": "theme",
+    }
+    for section in REQUIRED_SECTIONS:
+        if section not in theme:
+            errors.append(f"{theme_name}: missing [{section}]")
+
+    for section, key in required_values.items():
+        if not theme.get(section, {}).get(key):
+            errors.append(f"{theme_name}: missing [{section}].{key}")
+
+    theme_palette = palette(theme)
+    for key in REQUIRED_PALETTE_KEYS:
+        value = theme_palette.get(key)
+        if not value:
+            errors.append(f"{theme_name}: missing [palette].{key}")
+        elif not HEX_COLOR_RE.match(value):
+            errors.append(f"{theme_name}: [palette].{key} must be #RRGGBB")
+
+    return errors
 
 
 def adapter_paths(colorscheme_root, theme, aggregate_root=None):

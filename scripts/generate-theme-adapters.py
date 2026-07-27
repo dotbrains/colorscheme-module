@@ -11,6 +11,7 @@ import theme_registry
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SET_ME_UP_ROOT = ROOT.parents[1]
 THEMES_DIR = ROOT / "themes"
+TEMPLATES_DIR = ROOT / "templates"
 
 
 def _display_name(theme):
@@ -30,6 +31,24 @@ def _write_if_missing(path, content):
     if content.startswith("#!"):
         path.chmod(0o755)
     return True
+
+
+def _write(path, content):
+    path = pathlib.Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content)
+    if content.startswith("#!"):
+        path.chmod(0o755)
+
+
+def _render_template(name, theme):
+    values = {
+        "id": theme["id"],
+        "name": _display_name(theme),
+        "palette_name": theme["id"].replace("-", "_"),
+        **theme_registry.palette(theme),
+    }
+    return (TEMPLATES_DIR / name).read_text().format(**values)
 
 
 def _universal_script(theme):
@@ -128,22 +147,7 @@ main
 
 
 def _starship_config(theme):
-    theme_id = _shell_name(theme).replace("-", "_")
-
-    return f"""# TODO: tune this palette for {theme['id']}.
-palette = "{theme_id}"
-
-[character]
-success_symbol = "[>](green)"
-error_symbol = "[>](red)"
-
-[palettes.{theme_id}]
-red = "#ff5555"
-green = "#50fa7b"
-yellow = "#f1fa8c"
-blue = "#8be9fd"
-purple = "#bd93f9"
-"""
+    return _render_template("starship.toml.tmpl", theme)
 
 
 def _lazygit_config(theme):
@@ -163,30 +167,11 @@ gui:
 
 
 def _alacritty_theme(theme):
-    return f"""# TODO: tune this Alacritty palette for {theme['id']}.
-[colors.primary]
-background = "#282a36"
-foreground = "#f8f8f2"
-
-[colors.normal]
-black = "#21222c"
-red = "#ff5555"
-green = "#50fa7b"
-yellow = "#f1fa8c"
-blue = "#8be9fd"
-magenta = "#bd93f9"
-cyan = "#8be9fd"
-white = "#f8f8f2"
-"""
+    return _render_template("alacritty.toml.tmpl", theme)
 
 
 def _tmux_theme(theme):
-    return f"""# TODO: tune this tmux palette for {theme['id']}.
-set -g status-style "bg=#282a36,fg=#f8f8f2"
-set -g message-style "bg=#44475a,fg=#f8f8f2"
-set -g pane-border-style "fg=#44475a"
-set -g pane-active-border-style "fg=#8be9fd"
-"""
+    return _render_template("tmux.conf.tmpl", theme)
 
 
 def _zsh_adapter(theme, kind):
@@ -219,7 +204,10 @@ def _scaffold_content(label, theme):
     if label == "tmux theme":
         return _tmux_theme(theme)
     if label.startswith("zsh "):
-        return _zsh_adapter(theme, label.removeprefix("zsh ").removesuffix(" theme"))
+        adapter = label.removeprefix("zsh ").removesuffix(" theme")
+        if adapter == "fzf":
+            return _render_template("fzf.zsh.tmpl", theme)
+        return _zsh_adapter(theme, adapter)
     if label == "nvim plugin":
         return _nvim_plugin(theme)
     return None
@@ -263,6 +251,55 @@ def _scaffold(themes, aggregate_root):
     print(f"Scaffolded {len(created)} file(s); skipped {len(skipped)} existing file(s).")
 
 
+def _generated_paths(theme, aggregate_root):
+    wanted = {
+        "starship config",
+        "alacritty theme",
+        "tmux theme",
+        "zsh fzf theme",
+    }
+    return [
+        (label, path)
+        for label, path in theme_registry.adapter_paths(ROOT, theme, aggregate_root)
+        if label in wanted
+    ]
+
+
+def _write_generated(themes, aggregate_root):
+    written = []
+    for theme in themes:
+        for label, path in _generated_paths(theme, aggregate_root):
+            content = _scaffold_content(label, theme)
+            if content is None:
+                continue
+            _write(path, content)
+            written.append(path)
+
+    for path in written:
+        print(f"wrote {path}")
+    print(f"Wrote {len(written)} generated adapter file(s).")
+
+
+def _check_generated(themes, aggregate_root):
+    failed = False
+    for theme in themes:
+        for label, path in _generated_paths(theme, aggregate_root):
+            content = _scaffold_content(label, theme)
+            if content is None:
+                continue
+            if not path.exists():
+                failed = True
+                print(f"missing {label}: {path}")
+                continue
+            if path.read_text() != content:
+                failed = True
+                print(f"stale {label}: {path}")
+
+    if failed:
+        raise SystemExit(1)
+    print(f"Generated adapters are current for {len(themes)} theme(s).")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("themes", nargs="*", help="Theme IDs to print or scaffold.")
@@ -270,6 +307,16 @@ def main():
         "--scaffold",
         action="store_true",
         help="Create missing adapter files for the selected theme manifests.",
+    )
+    parser.add_argument(
+        "--write",
+        action="store_true",
+        help="Overwrite generated adapters from palette templates.",
+    )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="Fail if generated adapters differ from palette templates.",
     )
     parser.add_argument(
         "--aggregate",
@@ -281,8 +328,19 @@ def main():
     aggregate_root = SET_ME_UP_ROOT if args.aggregate else None
     selected_themes = _themes(args.themes)
 
+    if args.write and args.check:
+        raise SystemExit("--write and --check are mutually exclusive")
+
     if args.scaffold:
         _scaffold(selected_themes, aggregate_root)
+        return
+
+    if args.write:
+        _write_generated(selected_themes, aggregate_root)
+        return
+
+    if args.check:
+        _check_generated(selected_themes, aggregate_root)
         return
 
     _print_inventory(selected_themes, aggregate_root)

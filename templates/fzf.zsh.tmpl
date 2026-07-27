@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+# Generated from modules/colorschemes/themes/{id}.toml.
+
+if command -v fzf &>/dev/null; then
+    export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+    --color=fg:{foreground},bg:{background},hl:{bright_yellow}
+    --color=fg+:{bright_white},bg+:{selection},hl+:{bright_yellow}
+    --color=info:{bright_blue},prompt:{bright_red},pointer:{bright_green}
+    --color=marker:{bright_cyan},spinner:{bright_magenta},header:{bright_cyan}'
+fi

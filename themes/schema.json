@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "set-me-up theme manifest",
+  "type": "object",
+  "required": ["id", "name", "bat", "starship", "lazygit", "alacritty", "nvim", "tmux", "palette"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "name": { "type": "string" },
+    "bat": { "type": "object", "required": ["theme"] },
+    "starship": { "type": "object", "required": ["config"] },
+    "lazygit": { "type": "object", "required": ["config"] },
+    "alacritty": { "type": "object", "required": ["theme"] },
+    "nvim": { "type": "object", "required": ["colorscheme"] },
+    "tmux": { "type": "object", "required": ["theme"] },
+    "palette": {
+      "type": "object",
+      "required": [
+        "background",
+        "foreground",
+        "selection",
+        "black",
+        "red",
+        "green",
+        "yellow",
+        "blue",
+        "magenta",
+        "cyan",
+        "white",
+        "bright_black",
+        "bright_red",
+        "bright_green",
+        "bright_yellow",
+        "bright_blue",
+        "bright_magenta",
+        "bright_cyan",
+        "bright_white"
+      ]
+    }
+  }
+}

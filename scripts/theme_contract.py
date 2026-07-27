@@ -44,6 +44,14 @@ def main():
             failed = True
         seen.add(theme_id)
 
+        schema_errors = theme_registry.validate_theme(theme)
+        if schema_errors:
+            failed = True
+            print(f"FAIL {theme_id} schema")
+            for error in schema_errors:
+                print(f"  {error}")
+            continue
+
         missing = []
         for _label, path in required_paths(theme, aggregate=not args.local):
             if not path.exists():

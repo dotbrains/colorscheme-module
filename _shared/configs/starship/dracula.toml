@@ -1,14 +1,36 @@
+# Generated from themes/dracula.toml. Edit the manifest, then rerun the generator.
 format = "$directory$git_branch$git_status$character"
+palette = "dracula"
 
 [directory]
-style = "bold #8be9fd"
+truncation_length = 4
+style = "bold blue"
 
 [git_branch]
-style = "bold #bd93f9"
+style = "bold purple"
 
 [git_status]
-style = "#ff5555"
+style = "red"
 
 [character]
-success_symbol = "[❯](bold #50fa7b)"
-error_symbol = "[❯](bold #ff5555)"
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+vimcmd_symbol = "[<](bold green)"
+
+[palettes.dracula]
+black = "#21222c"
+red = "#ff5555"
+green = "#50fa7b"
+yellow = "#f1fa8c"
+blue = "#bd93f9"
+purple = "#ff79c6"
+cyan = "#8be9fd"
+white = "#f8f8f2"
+bright_black = "#6272a4"
+bright_red = "#ff6e6e"
+bright_green = "#69ff94"
+bright_yellow = "#ffffa5"
+bright_blue = "#d6acff"
+bright_purple = "#ff92df"
+bright_cyan = "#a4ffff"
+bright_white = "#ffffff"

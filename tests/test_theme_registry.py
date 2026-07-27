@@ -47,6 +47,22 @@ class TestThemeRegistry(unittest.TestCase):
         self.assertFalse(any(label == "lazygit config" for label, _path in local_paths))
         self.assertTrue(any(label == "nvim plugin" for label, _path in aggregate_paths))
 
+    def test_validate_theme_requires_palette_colors(self):
+        errors = theme_registry.validate_theme({
+            "id": "bad-theme",
+            "name": "Bad Theme",
+            "bat": {"theme": "Bad"},
+            "starship": {"config": "bad-theme.toml"},
+            "lazygit": {"config": "bad-theme.yml"},
+            "alacritty": {"theme": "bad-theme.toml"},
+            "nvim": {"colorscheme": "bad-theme"},
+            "tmux": {"theme": "bad-theme.conf"},
+            "palette": {"background": "282828"},
+        })
+
+        self.assertIn("bad-theme: [palette].background must be #RRGGBB", errors)
+        self.assertIn("bad-theme: missing [palette].foreground", errors)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -56,6 +56,9 @@ jobs:
       - name: Verify local theme manifest contract
         run: python3 scripts/theme_contract.py --local
 
+      - name: Verify generated local adapters
+        run: python3 scripts/generate-theme-adapters.py --check
+
       - name: Verify lib.sh syntax
         run: bash -n _shared/lib.sh && echo "✓ lib.sh syntax valid"
 
@@ -78,6 +81,7 @@ jobs:
             node --version
             python3 -m unittest discover -s tests -p "test_*.py" -v
             python3 scripts/theme_contract.py --local
+            python3 scripts/generate-theme-adapters.py --check
             echo "Running shellcheck suite with the pinned toolchain:"
             ./tests/main.sh
           '
