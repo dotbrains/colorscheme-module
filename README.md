@@ -189,13 +189,16 @@ read, so add it first.
 python3 scripts/theme_contract.py --local
 python3 scripts/theme_contract.py
 python3 scripts/generate-theme-adapters.py
+python3 scripts/generate-theme-adapters.py <theme> --scaffold --aggregate
 ```
 
 `theme_contract.py --local` validates files owned by this repository and is safe
 for standalone CI. `theme_contract.py` also validates cross-repo adapter files in
 an aggregate `set-me-up` checkout. `generate-theme-adapters.py` prints the
 adapter inventory for each manifest so agents can see exactly where a theme
-needs files before editing.
+needs files before editing. Add `--scaffold` to create missing placeholder
+adapters without overwriting existing files; add `--aggregate` to include
+cross-repo shell, terminal, tmux, and editor adapters.
 
 ### Adding New OS Support
 

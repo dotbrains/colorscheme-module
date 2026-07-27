@@ -38,6 +38,9 @@ jobs:
       - name: Run shellcheck tests
         run: ./tests/main.sh
 
+      - name: Run Python tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+
       - name: Display bash version
         run: bash --version
 
@@ -73,6 +76,7 @@ jobs:
             bash --version | head -1
             shellcheck --version | head -3
             node --version
+            python3 -m unittest discover -s tests -p "test_*.py" -v
             python3 scripts/theme_contract.py --local
             echo "Running shellcheck suite with the pinned toolchain:"
             ./tests/main.sh
