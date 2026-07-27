@@ -3,6 +3,7 @@
 import pathlib
 import re
 import sys
+import argparse
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -40,7 +41,7 @@ def manifests():
     return [_read_manifest(path) for path in sorted(THEMES_DIR.glob("*.toml"))]
 
 
-def required_paths(theme):
+def required_paths(theme, aggregate=True):
     theme_id = theme["id"]
     lazygit = theme.get("lazygit", {})
     lazygit_config = lazygit.get("config", f"{theme_id}.yml")
@@ -50,25 +51,40 @@ def required_paths(theme):
     nvim_colorscheme = theme.get("nvim", {}).get("colorscheme", theme_id)
 
     paths = [
+        ROOT / "themes" / f"{theme_id}.toml",
         ROOT / "universal" / f"{theme_id}.sh",
         ROOT / "macos" / f"{theme_id}.sh",
         ROOT / "arch" / f"{theme_id}.sh",
         ROOT / "_shared" / "configs" / "starship" / starship_config,
+    ]
+
+    if lazygit.get("source", "local") == "local":
+        paths.append(ROOT / "_shared" / "configs" / "lazygit" / lazygit_config)
+
+    if not aggregate:
+        return paths
+
+    paths.extend([
         SET_ME_UP_ROOT / "home" / ".config" / "alacritty" / "theme" / alacritty_theme,
         SET_ME_UP_ROOT / "home" / ".config" / "tmux" / "themes" / tmux_theme,
         SET_ME_UP_ROOT / "home" / ".config" / "zsh" / "themes" / theme_id / "bat.zsh",
         SET_ME_UP_ROOT / "home" / ".config" / "zsh" / "themes" / theme_id / "fzf.zsh",
         SET_ME_UP_ROOT / "home" / ".config" / "zsh" / "themes" / theme_id / "dircolors.zsh",
         SET_ME_UP_ROOT / "home" / ".config" / "nvim" / "lua" / "plugins" / "ui" / f"{nvim_colorscheme}.lua",
-    ]
-
-    if lazygit.get("source", "local") == "local":
-        paths.append(ROOT / "_shared" / "configs" / "lazygit" / lazygit_config)
+    ])
 
     return paths
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Validate theme manifest adapters.")
+    parser.add_argument(
+        "--local",
+        action="store_true",
+        help="Only check files owned by the colorscheme module checkout.",
+    )
+    args = parser.parse_args()
+
     failed = False
     seen = set()
 
@@ -83,7 +99,11 @@ def main():
             failed = True
         seen.add(theme_id)
 
-        missing = [path for path in required_paths(theme) if not path.exists()]
+        missing = [
+            path
+            for path in required_paths(theme, aggregate=not args.local)
+            if not path.exists()
+        ]
         if missing:
             failed = True
             print(f"FAIL {theme_id}")

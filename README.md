@@ -186,12 +186,14 @@ read, so add it first.
    manifest, then run:
 
 ```bash
+python3 scripts/theme_contract.py --local
 python3 scripts/theme_contract.py
 python3 scripts/generate-theme-adapters.py
 ```
 
-`theme_contract.py` validates that every manifest has the required adapter files
-in an aggregate `set-me-up` checkout. `generate-theme-adapters.py` prints the
+`theme_contract.py --local` validates files owned by this repository and is safe
+for standalone CI. `theme_contract.py` also validates cross-repo adapter files in
+an aggregate `set-me-up` checkout. `generate-theme-adapters.py` prints the
 adapter inventory for each manifest so agents can see exactly where a theme
 needs files before editing.
 

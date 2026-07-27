@@ -50,6 +50,9 @@ jobs:
             bash -n "$script" && echo "✓ $script syntax valid"
           done
 
+      - name: Verify local theme manifest contract
+        run: python3 scripts/theme_contract.py --local
+
       - name: Verify lib.sh syntax
         run: bash -n _shared/lib.sh && echo "✓ lib.sh syntax valid"
 
@@ -70,6 +73,7 @@ jobs:
             bash --version | head -1
             shellcheck --version | head -3
             node --version
+            python3 scripts/theme_contract.py --local
             echo "Running shellcheck suite with the pinned toolchain:"
             ./tests/main.sh
           '
